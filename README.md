@@ -2,7 +2,7 @@
 
 **Die Paar-App für iOS, die euch hilft, einander besser zu kennen, an das Wichtige zu denken und euch jeden Tag ein Lächeln zu schenken.**
 
-> Status: 🚧 Konzeptphase / in Entwicklung
+> Status: 🚧 Erste lauffähige Version (lokal, noch ohne Server)
 
 ---
 
@@ -23,17 +23,47 @@ Hinter dem Maskottchen steckt ein „Buch“ über den Partner mit allen Infos, 
 - **Zyklus-Begleiter:** Grobes Tracking über den ersten Periodentag, Erklärungen zu jeder Phase und Tipps für den Partner. Die Partnerin entscheidet, was geteilt wird
 - **Aufgaben:** Tägliche, wöchentliche und monatliche Aufgaben für den Partner (z. B. „Mach ein Kompliment“, „Geht auf ein Date“) mit Herzen, Streaks und Belohnungen fürs Maskottchen
 
-## Tech-Stack (geplant)
+## Stand der Umsetzung
+
+Die App läuft komplett auf dem Handy, einen Server gibt es noch nicht.
+
+| Bereich | Stand |
+|---|---|
+| Profil mit Auswahl-Chips und „+ Andere“ | ✅ |
+| Maskottchen (Ratte, weiblich mit Schleife und Wimpern) | ✅ als Vektorgrafik, echtes 3D-Modell folgt |
+| Partner verbinden per QR-Code oder Nachricht | ✅ das Profil steckt im Code, kein Live-Abgleich |
+| Partner-Buch mit Kapiteln, Einträgen und Bildern | ✅ |
+| Geschenke-Board | ✅ |
+| Termine und Erinnerungen mit Vorlauf | ✅ lokale Mitteilungen |
+| Zyklus-Begleiter mit Freigabe | ✅ |
+| Aufgaben (täglich, wöchentlich, monatlich), Herzen, Serie | ✅ |
+| Registrierung mit Verifizierung | ⏳ braucht den Server |
+| Live-Abgleich zwischen beiden Handys, Push vom Partner | ⏳ braucht den Server |
+
+## Tech-Stack
 
 | Bereich | Technologie |
 |---|---|
-| App | Swift, SwiftUI (iOS 17+) |
-| 3D | RealityKit / SceneKit, Modelle als USDZ (Blender) |
-| Backend | Firebase oder Supabase (EU-Region) |
-| Auth | Sign in with Apple, E-Mail, SMS |
-| Notifications | Lokale Notifications + APNs |
-| Widgets | WidgetKit |
-| Distribution | TestFlight → App Store |
+| App | React Native mit Expo SDK 58, TypeScript |
+| Maskottchen | react-native-svg (später 3D-Modell) |
+| Speicher | AsyncStorage auf dem Gerät |
+| QR-Code | react-native-qrcode-svg, expo-camera |
+| Bilder | expo-image-picker |
+| Erinnerungen | expo-notifications (lokal) |
+| Backend (geplant) | Firebase oder Supabase (EU-Region) |
+| Verteilung | Expo Go zum Testen, später EAS Build → TestFlight → App Store |
+
+Ursprünglich war Swift/SwiftUI geplant. Weil die Entwicklung unter Windows läuft, ist die App mit Expo umgesetzt: Sie lässt sich in VS Code bauen und direkt auf dem iPhone testen.
+
+## Projektstruktur
+
+```
+App.tsx              Einstieg: Tabs, Sheets, Erinnerungen
+src/screens/         Home, Buch, Geschenke, Aufgaben, Termine, Zyklus, Ich, Verbinden, Onboarding
+src/components/      Maskottchen und Bausteine (Buttons, Chips, Felder)
+src/lib/             Speicher, Datum, Zyklus, Aufgaben, Einladungscode, Erinnerungen
+src/data/            Auswahl-Chips, Aufgaben-Pool, Texte zu den Zyklusphasen
+```
 
 ## Roadmap
 
@@ -51,9 +81,16 @@ Pups verarbeitet sehr persönliche Daten, darunter Zyklusdaten (Gesundheitsdaten
 
 ## Setup
 
-*Folgt, sobald das Xcode-Projekt angelegt ist.*
+Voraussetzungen: [Node.js](https://nodejs.org) (LTS) auf dem Rechner und die App **Expo Go** auf dem iPhone.
 
-Voraussetzungen: Mac mit Xcode, Apple Developer Account (für Gerätetests & TestFlight).
+```bash
+npm install
+npx expo start
+```
+
+Danach den QR-Code aus dem Terminal mit der iPhone-Kamera scannen. Rechner und iPhone müssen im selben WLAN sein. Klappt die Verbindung nicht, hilft `npx expo start --tunnel`.
+
+Zum Verbinden zeigt jeder dem anderen unter „Partner verbinden“ seinen Code.
 
 ---
 

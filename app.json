@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Pups",
+    "slug": "pups",
+    "scheme": "pups",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FDEEF2"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.pups.ios",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Pups nutzt die Kamera, um den QR-Code deines Partners zu scannen und Fotos für das Partner-Buch aufzunehmen.",
+        "NSPhotoLibraryUsageDescription": "Pups greift auf deine Fotos zu, damit du Bilder ins Partner-Buch und aufs Geschenke-Board legen kannst."
+      }
+    },
+    "android": {
+      "package": "app.pups.android",
+      "adaptiveIcon": {
+        "backgroundColor": "#FDEEF2",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "plugins": [
+      "expo-camera",
+      "expo-image-picker",
+      "expo-notifications"
+    ]
+  }
+}
